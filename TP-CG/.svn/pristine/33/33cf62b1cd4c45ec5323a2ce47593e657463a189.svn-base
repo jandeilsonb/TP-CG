@@ -1,0 +1,23 @@
+/*
+ * Bolinha.h
+ *
+ *  Created on: 10/05/2015
+ *      Author: root
+ */
+
+#ifndef BOLINHA_H_
+#define BOLINHA_H_
+#include <windows.h>
+#include <GL/glut.h>
+#include "Objeto.h"
+
+class Bolinha: public Objeto {
+public:
+	bool wire;
+public:
+	Bolinha(bool wire);
+	virtual ~Bolinha();
+	void Desenha();
+};
+
+#endif /* BOLINHA_H_ */

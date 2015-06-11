@@ -1,0 +1,28 @@
+/*
+ * Cilindro.h
+ *
+ *  Created on: 08/05/2015
+ *      Author: root
+ */
+//classe responsavel por desenhar o objeto Cilindro
+#ifndef CILINDRO_H_
+#define CILINDRO_H_
+#include <windows.h>
+#include <GL/glut.h>
+#include <stdlib.h>
+#include <math.h>
+#include "Objeto.h"
+const float PI = 3.14159;
+class Cilindro: public Objeto {
+private:
+	float raio;
+	float alt;
+public:
+	Cilindro();
+	Cilindro(float raio,float alt);
+	virtual ~Cilindro();
+	void Desenha();
+	void Tampa(float raio);
+};
+
+#endif /* CILINDRO_H_ */

@@ -1,0 +1,22 @@
+/*
+ * Bolinha.cpp
+ *
+ *  Created on: 10/05/2015
+ *      Author: root
+ */
+
+#include "Bolinha.h"
+
+Bolinha::Bolinha() {
+	// TODO Auto-generated constructor stub
+
+}
+
+Bolinha::~Bolinha() {
+	// TODO Auto-generated destructor stub
+}
+
+void Bolinha::Desenha(){
+	glColor3f(1.0,1.0,1.0);
+	glutSolidSphere(0.1,4000,4000);
+}

@@ -1,0 +1,23 @@
+/*
+ * Palheta.h
+ *
+ *  Created on: 08/05/2015
+ *      Author: root
+ */
+
+#ifndef PALHETA_H_
+#define PALHETA_H_
+#include "Objeto.h"
+//#include <windows.h>
+#include <GL/glut.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+class Palheta: public Objeto {
+public:
+	Palheta();
+	virtual ~Palheta();
+	void Desenha();
+};
+
+#endif /* PALHETA_H_ */

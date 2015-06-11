@@ -1,0 +1,30 @@
+/*
+ * Mesa.h
+ *
+ *  Created on: 07/05/2015
+ *      Author: root
+ */
+
+#ifndef MESA_H_
+#define MESA_H_
+#include <windows.h>
+#include <GL/glut.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+#include "Objeto.h"
+#include "Cilindro.h"
+#include "Palheta.h"
+#include "Cubo.h"
+#include "Poligono.h"
+#include "Triangulo.h"
+#include "Trilha.h"
+//classe responsavel em desenhar toda a mesa
+class Mesa: public Objeto {
+public:
+	Mesa();
+	virtual ~Mesa();
+	void Desenha();
+};
+
+#endif /* MESA_H_ */

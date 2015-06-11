@@ -1,0 +1,28 @@
+/*
+ * Cubo.h
+ *
+ *  Created on: 07/05/2015
+ *      Author: root
+ */
+//classe responsavel em desenhar o objeto Cubo
+#ifndef CUBO_H_
+#define CUBO_H_
+#include <windows.h>
+#include <GL/glut.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+const GLfloat vertices[][3] =
+		    {{-1.0,-1.0,-1.0},{1.0,-1.0,-1.0},
+		     {1.0,1.0,-1.0},  {-1.0,1.0,-1.0}, {-1.0,-1.0,1.0},
+		     {1.0,-1.0,1.0},  {1.0,1.0,1.0},   {-1.0,1.0,1.0}
+		    };
+class Cubo {
+public:
+	Cubo();
+	virtual ~Cubo();
+	void polygon(int a, int b, int c , int d);
+	void Desenha();
+};
+
+#endif /* CUBO_H_ */

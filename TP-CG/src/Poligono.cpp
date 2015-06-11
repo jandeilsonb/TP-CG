@@ -1,0 +1,73 @@
+/*
+ * Poligono.cpp
+ *
+ *  Created on: 11/05/2015
+ *      Author: jandeilson
+ */
+
+#include "Poligono.h"
+
+Poligono::Poligono(){
+	a = b = c = d = 0.0;
+
+}
+
+Poligono::~Poligono(){
+
+}
+
+Poligono::Poligono(float a, float b, float c, float d){
+	this->a = a;
+	this->b = b;
+	this->c = c;
+	this->d = d;
+}
+
+void Poligono::Desenha(){
+	glNormal3f(1.0,0.0,0.0);
+	glEnable(GL_COLOR_MATERIAL);
+	glBegin(GL_POLYGON);
+	 glVertex3f(-1.0-b, 1.0+a, 0.5);
+	 glVertex3f(1.0+b, 1.0+c, 0.5);
+	 glVertex3f(1.0+d, -1.0-c, 0.5);
+	 glVertex3f(-1.0-d, -1.0-a, 0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	 glVertex3f(-1.0-b, 1.0+a, -0.5);
+	 glVertex3f(1.0+b, 1.0+c, -0.5);
+	 glVertex3f(1.0+d, -1.0-c, -0.5);
+	 glVertex3f(-1.0-d, -1.0-a, -0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	 glVertex3f(-1.0-b, 1.0+a, 0.5);
+	 glVertex3f(-1.0-b, 1.0+a, -0.5);
+	 glVertex3f(1.0+b, 1.0+c, -0.5);
+	 glVertex3f(1.0+b, 1.0+c, 0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	 glVertex3f(1.0+b, 1.0+c, 0.5);
+	 glVertex3f(1.0+b, 1.0+c, -0.5);
+	 glVertex3f(1.0+d, -1.0-c, -0.5);
+	 glVertex3f(1.0+d, -1.0-c, 0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	 glVertex3f(-1.0-b, 1.0+a, 0.5);
+	 glVertex3f(-1.0-d, -1.0-a, 0.5);
+	 glVertex3f(-1.0-d, -1.0-a, -0.5);
+	 glVertex3f(-1.0-b, 1.0+a, -0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	 glVertex3f(-1.0-d, -1.0-a, -0.5);
+	 glVertex3f(-1.0-d, -1.0-a, 0.5);
+	 glVertex3f(1.0+d, -1.0-c, 0.5);
+	 glVertex3f(1.0+d, -1.0-c, -0.5);
+	glEnd();
+}
+
+
+

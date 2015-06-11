@@ -1,0 +1,253 @@
+//#include <GL/glut.h>
+//#include <stdlib.h>
+//#include <math.h>
+//#include <stdio.h>
+#include <windows.h>
+#include "Cubo.h"
+#include "Cilindro.h"
+#include "Palheta.h"
+#include "Mesa.h"
+#include "Bolinha.h"
+// Observador
+GLfloat angObserv = 0.0;
+// Angulos de rotacao e de inclinacao do monitor
+GLfloat pal1 = 0,
+        pal2 = 0,
+        obsh = 0,
+        obsv = 0,
+		yesfera = 0.5,
+		xesfera = 2.1,
+		dx = 0.07;
+
+bool l = false, movePal1 = false, movePal2 = false;
+
+GLint view_w, view_h, primitiva;
+GLfloat win, r, g, b;
+
+//exibe os eixos coordenados
+void eixosCoordenados()
+{
+    glBegin(GL_LINES);
+    glVertex3f(0, 0, 0);
+    glVertex3f(0, 0, 10);
+    glVertex3f(0, 0, 0);
+    glVertex3f(0, 10, 0);
+    glVertex3f(0, 0, 0);
+    glVertex3f(10, 0, 0);
+    glEnd();
+}
+// Função é chamada caso a tela tenha tido alterada, sendo distorcer a imagem
+void AlteraTamanhoTela(int w, int h) {
+
+    if (h == 0)
+        h = 1;
+
+    float proporcao =  w * 1.0 / h;
+
+    glMatrixMode(GL_PROJECTION);
+
+    glLoadIdentity();
+
+    glViewport(0, 0, w, h);
+
+    gluPerspective(60.0f, proporcao, 0.1f, 100.0f);
+
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void exibe()
+{
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//desenha os eixos x,y,z
+	eixosCoordenados();
+
+glPushMatrix();
+//glTranslated(obsh, 0.0, 0.0);
+//glTranslated(0.0, obsv, 0.0);
+glScalef(1.1,1.1,1.0);
+//glRotatef(obsv, 1.0, 0.0, 0.0);
+//glRotatef(obsh, 0.0, 1.0, 0.0);
+
+glTranslatef(0.0,obsv,0.0);
+glTranslatef(obsh,0.0,0.0);
+
+   glPushMatrix();
+    glColor3f(1.0,0.0,0.0);
+    Mesa mesa;
+    mesa.Desenha();
+   glPopMatrix();
+
+   glPushMatrix();
+    glTranslatef(xesfera,yesfera,0.0);
+    Bolinha bolinha;
+    bolinha.Desenha();
+   glPopMatrix();
+
+   glPushMatrix();
+    glScalef(0.7,0.7,1.0);
+   	glRotatef(-20.0,0.0,0.0,1.0);
+    glTranslatef(-1.7, 1.3, 0.0);
+    glRotatef(pal1,0.0,0.0,1.0);
+    Palheta paletaE;
+    paletaE.Desenha();
+   glPopMatrix();
+
+   glPushMatrix();
+    glScalef(0.7,0.7,1.0);
+  	glRotatef(20.0,0.0,0.0,1.0);
+    glTranslatef(1.7, 1.3, 0.0);
+    glRotatef(-pal2,0.0,0.0,1.0);
+    glRotatef(180.0,0.0,1.0,0.0);
+    Palheta paletaD;
+    paletaD.Desenha();
+   glPopMatrix();
+
+    glPopMatrix();
+
+   glFlush();
+   glutSwapBuffers();
+
+}
+
+void lanca(){
+	yesfera = 0.5;
+	xesfera = 2.1;
+	l = true;
+}
+
+void gravidade(){
+
+	if(yesfera > 0.3)
+		yesfera -= 0.03;
+
+	if (l == true)
+		yesfera += 0.1;
+	if(yesfera >= 7){
+		l = false;
+	}
+
+/*
+	if(yesfera > 0.3 || (xesfera < 1.9 && xesfera > -1.9) )
+	xesfera += dx;
+	if (xesfera>=1.8 || xesfera<=-1.8)
+		dx*=-1;
+*/
+
+	//printf("%f\n",yesfera);
+	if(yesfera >= 7.0)
+		xesfera = 1.8;
+
+
+	if(yesfera > 0.3 || (xesfera <= 1.8 && xesfera >= -1.8) ){
+	xesfera += dx;
+	if (xesfera>=1.8 || xesfera<=-1.8)
+		dx*=-1;
+	}
+
+	if(movePal1){
+		pal1 += 5.0;
+	    if(pal1 >= 50.0)
+		    pal1 = 51.0;
+	}
+
+	if(movePal2){
+		pal2 += 5.0;
+		if(pal2 >= 50.0)
+		    pal2 = 51;
+	}
+
+
+
+
+	glutPostRedisplay();
+}
+
+void controlePalheta(unsigned char tecla, int x, int y){
+	switch (tecla) {
+		case 'o': movePal1 = false;pal1 = 0.0; break;
+	    case 'p': movePal2 = false;pal2 = 0.0; break;
+	}
+
+
+}
+
+void controle (unsigned char tecla, int x, int y) {
+   switch (tecla) {
+      case 27: exit(EXIT_SUCCESS);  // tecla ESC para sair
+      case 'o': movePal1 = true; break;
+      case 'p': movePal2 = true; break;
+      case 'a': obsh += 0.5; break;
+      case 'd': obsh -= 0.5; break;
+      case 'w': obsv += 0.5; break;
+      case 's': obsv -= 0.5; break;
+      case 'l': lanca(); break;
+
+   }
+   glutPostRedisplay();
+}
+
+void janela(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, 1.0, 1.0, 30.0);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void inicia()
+{
+   // posicionamento inicial do observador
+     gluLookAt(0.0,4.0,8.0, 0.0,4.0,0.0, 0.0,1.0,0.0);
+
+    // estabelece parametros de iluminacao
+
+    GLfloat mat_ambient[]={1.0, 1.0, 0.0, 1.0};
+    GLfloat mat_diffuse[]={0.6, 0.6, 0.0, 1.0};
+    GLfloat mat_specular[]={0.4, 0.4, 0.0, 1.0};
+    GLfloat mat_shininess={50.0};
+    GLfloat light_ambient[]={0.3, 0.3, 0.3, 1.0};
+    GLfloat light_diffuse[]={0.6, 0.6, 0.6, 1.0};
+    GLfloat light_specular[]={0.6, 0.6, 0.6, 1.0};
+
+    GLfloat light_position[]={3.0,3.0,3.0,1.0};
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+   glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, mat_shininess);
+
+    glEnable(GL_SMOOTH);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_DEPTH_TEST);
+
+    glClearColor (0.7, 0.7, 1.0, 1.0);
+
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(500, 500);
+    glutCreateWindow("PinBall");
+    glutReshapeFunc(AlteraTamanhoTela);
+    glutDisplayFunc(exibe);
+    glutIdleFunc(gravidade);
+    glutKeyboardFunc(controle);
+    glutKeyboardUpFunc(controlePalheta);
+    // posicionamento inicial do observador
+    //gluLookAt(0.0,4.0,8.0, 0.0,4.0,0.0, 0.0,1.0,0.0);
+    inicia();
+    glutMainLoop();
+}
+

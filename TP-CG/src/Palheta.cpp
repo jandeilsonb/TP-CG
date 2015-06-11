@@ -1,0 +1,56 @@
+/*
+ * Palheta.cpp
+ *
+ *  Created on: 08/05/2015
+ *      Author: root
+ */
+
+#include "Palheta.h"
+
+Palheta::Palheta() {
+	// TODO Auto-generated constructor stub
+
+}
+
+Palheta::~Palheta() {
+	// TODO Auto-generated destructor stub
+}
+void Palheta::Desenha(){
+	glNormal3f(1.0,0.0,0.0);
+	glEnable(GL_COLOR_MATERIAL);
+	 glScalef(0.5,0.5,0.2);
+
+	    glBegin(GL_POLYGON);
+			glVertex3f(0.0, 0.0, -0.8);
+			glVertex3f(0, 0.5, -0.8);
+			glVertex3f(2.0, 0.0, -0.8);
+		 glEnd();
+
+	    glBegin(GL_POLYGON);
+			glVertex3f(0.0, 0.0, 0.8);
+			glVertex3f(0.0, 0.5, 0.8);
+			glVertex3f(2.0, 0.0, 0.8);
+		 glEnd();
+
+		 glBegin(GL_POLYGON);
+			glVertex3f(0.0, 0.0, -0.8);
+			glVertex3f(0.0, 0.0, 0.8);
+			glVertex3f(0.0, 0.5, 0.8);
+			glVertex3f(0.0, 0.5, -0.8);
+		 glEnd();
+
+		 glBegin(GL_POLYGON);
+			glVertex3f(0.0, 0.5, -0.8);
+			glVertex3f(2.0, 0.0, -0.8);
+			glVertex3f(2.0, 0.0, 0.8);
+			glVertex3f(0.0, 0.5, 0.8);
+		 glEnd();
+
+		 glBegin(GL_POLYGON);
+			glVertex3f(0.0, 0.0, -0.8);
+			glVertex3f(2.0, 0.0, -0.8);
+			glVertex3f(2.0, 0.0, 0.8);
+			glVertex3f(0.0, 0.0, 0.8);
+		 glEnd();
+
+}

@@ -1,0 +1,17 @@
+/*
+ * Mesa.cpp
+ *
+ *  Created on: 07/05/2015
+ *      Author: root
+ */
+
+#include "Mesa.h"
+
+Mesa::Mesa() {
+	// TODO Auto-generated constructor stub
+
+}
+
+Mesa::~Mesa() {
+	// TODO Auto-generated destructor stub
+}

@@ -1,0 +1,292 @@
+//#include <GL/glut.h>
+//#include <stdlib.h>
+//#include <math.h>
+//#include <stdio.h>
+#include "Cubo.h"
+#include "Cilindro.h"
+#include "Palheta.h"
+// Observador
+GLfloat angObserv = 0.0;
+// Angulos de rotacao e de inclinacao do monitor
+GLfloat pal1 = 0,
+        pal2 = 0,
+        obsh = 0,
+        obsv = 0,
+		yesfera = 0.5,
+		xesfera = 1.85,
+		dx = 0.07;
+
+bool l = false;
+
+void mesa(){
+	//mesa em si
+    glPushMatrix();
+     glScalef(4.0, 7.5, 0.2);
+     glTranslatef(0.0, 0.5, -0.8);
+     Cubo cubo;
+     cubo.Desenha();
+    glPopMatrix();
+
+    //barra lateral direita
+    glPushMatrix();
+     glScalef(0.1, 7.5, 0.3);
+     glTranslatef(20.0, 0.5, 0.0);
+     Cubo cubo1;
+     cubo1.Desenha();
+    glPopMatrix();
+
+    //barra lateral direita que separa a bola
+    glPushMatrix();
+         glScalef(0.1, 6.5, 0.3);
+         glTranslatef(17.0, 0.5, 0.0);
+         Cubo cubo2;
+         cubo2.Desenha();
+    glPopMatrix();
+
+    //barra lateral esquerda
+    glPushMatrix();
+     glScalef(0.1, 7.5, 0.3);
+     glTranslatef(-20.0, 0.5, 0.0);
+     Cubo cubo3;
+     cubo3.Desenha();
+    glPopMatrix();
+
+    //barra superior
+    glPushMatrix();
+     glScalef(4.1, 0.1, 0.3);
+     glTranslatef(0, 75.0, 0.0);
+     Cubo cubo4;
+     cubo4.Desenha();
+    glPopMatrix();
+
+    //barra inferior esquerda
+    glPushMatrix();
+     glScalef(0.9, 0.2, 0.3);
+     glTranslatef(1.8, 0.5, 0.0);
+     Cubo cubo5;
+     cubo5.Desenha();
+    glPopMatrix();
+
+    //barra inferior direita
+    glPushMatrix();
+     glScalef(0.9, 0.2, 0.3);
+     glTranslatef(-1.8, 0.5, 0.0);
+     Cubo cubo6;
+     cubo6.Desenha();
+    glPopMatrix();
+
+    //quina direita
+    glPushMatrix();
+     glScalef(0.5, 2.0, 1.0);
+     glRotatef(180.0,0.0,0.0,1.0);
+     glTranslatef(-4.0, -3.74, 0.0);
+     Palheta paleta;
+     paleta.Desenha();
+    glPopMatrix();
+
+    //cilindro da direita
+    glPushMatrix();
+     glScalef(0.2,0.2,0.2);
+     glTranslatef(2.5,30.0,0.0);
+     Cilindro cilindroD;
+     cilindroD.Desenha();
+    glPopMatrix();
+
+    //cilindro da esquerda
+    glPushMatrix();
+     glScalef(0.2,0.2,0.2);
+     glTranslatef(-2.5,30.0,0.0);
+     Cilindro cilindroE;
+     cilindroE.Desenha();
+    glPopMatrix();
+
+    //cilindro do centro
+    glPushMatrix();
+     glScalef(0.2,0.2,0.2);
+     glTranslatef(0.0,26.0,0.0);
+     Cilindro cilindroC;
+     cilindroC.Desenha();
+    glPopMatrix();
+
+}
+
+void exibe()
+{
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+glPushMatrix();
+//glTranslated(obsh, 0.0, 0.0);
+//glTranslated(0.0, obsv, 0.0);
+glScalef(1.1,1.0,1.0);
+glRotatef(obsv, 1.0, 0.0, 0.0);
+glRotatef(obsh, 0.0, 1.0, 0.0);
+
+   glPushMatrix();
+    glColor3f(1.0,0.0,0.0);
+    mesa();
+   glPopMatrix();
+
+//   glPushMatrix();
+//    glTranslatef(xesfera,yesfera,0.0);
+//    glutSolidSphere(0.1,4000,4000);
+//   glPopMatrix();
+
+   glPushMatrix();
+    glTranslatef(-1.3, 0.0, 0.0);
+    glRotatef(pal1,0.0,0.0,1.0);
+   // glRotatef(180.0,0.0,1.0,0.0);
+    Palheta paletaE;
+    paletaE.Desenha();
+   glPopMatrix();
+
+   glPushMatrix();
+    glTranslatef(1.3, 0.0, 0.0);
+    glRotatef(-pal2,0.0,0.0,1.0);
+    glRotatef(180.0,0.0,1.0,0.0);
+    Palheta paletaD;
+    paletaD.Desenha();
+   glPopMatrix();
+
+    glPopMatrix();
+
+   glFlush();
+   glutSwapBuffers();
+
+}
+
+void lanca(){
+	yesfera = 0.5;
+	xesfera = 1.85;
+	l = true;
+}
+
+void gravidade(){
+
+	if(yesfera > 0.3)
+		yesfera -= 0.05;
+
+	if (l == true)
+		yesfera += 0.1;
+	if(yesfera >= 7){
+		l = false;
+	}
+
+/*
+	if(yesfera > 0.3 || (xesfera < 1.9 && xesfera > -1.9) )
+	xesfera += dx;
+	if (xesfera>=1.8 || xesfera<=-1.8)
+		dx*=-1;
+*/
+
+	//printf("%f\n",yesfera);
+	if(yesfera >= 6.5)
+		xesfera = 1.8;
+
+
+	if(yesfera > 0.3 || (xesfera <= 1.8 && xesfera >= -1.8) )
+	xesfera += dx;
+	if (xesfera>=1.8 || xesfera<=-1.8)
+		dx*=-1;
+
+	if(pal1 > 0.0){
+		pal1 += 5.0;
+	    if(pal1 > 50.0)
+		    pal1 = 0;
+	}
+
+	if(pal2 > 0.0){
+		pal2 += 5.0;
+		if(pal2 > 50.0)
+		    pal2 = 0;
+
+	}
+
+
+	glutPostRedisplay();
+}
+
+void movepal1(){
+	pal1 = 0.5;
+}
+
+void movepal2(){
+	pal2 = 0.5;
+}
+
+
+void controle (unsigned char tecla, int x, int y) {
+   switch (tecla) {
+      case 27: exit(EXIT_SUCCESS);  // tecla ESC para sair
+      case 'o': movepal1(); break;
+      case 'p': movepal2(); break;
+      case 'a': obsh += 0.5; break;
+      case 'd': obsh -= 0.5; break;
+      case 'w': obsv += 0.5; break;
+      case 's': obsv -= 0.5; break;
+      case 'l': lanca(); break;
+
+   }
+   glutPostRedisplay();
+}
+
+void janela(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, 1.0, 1.0, 30.0);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void inicia()
+{
+   // posicionamento inicial do observador
+     gluLookAt(0.0,3.7,7.0, 0.0,3.7,0.0, 0.0,1.0,0.0);
+
+    // estabelece parametros de iluminacao
+
+    GLfloat mat_ambient[]={1.0, 1.0, 0.0, 1.0};
+    GLfloat mat_diffuse[]={0.6, 0.6, 0.0, 1.0};
+    GLfloat mat_specular[]={0.4, 0.4, 0.0, 1.0};
+    GLfloat mat_shininess={50.0};
+    GLfloat light_ambient[]={0.3, 0.3, 0.3, 1.0};
+    GLfloat light_diffuse[]={0.6, 0.6, 0.6, 1.0};
+    GLfloat light_specular[]={0.6, 0.6, 0.6, 1.0};
+
+    GLfloat light_position[]={3.0,3.0,3.0,1.0};
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+   glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, mat_shininess);
+
+    glEnable(GL_SMOOTH);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_DEPTH_TEST);
+
+    glClearColor (0.7, 0.7, 1.0, 1.0);
+
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(500, 500);
+    glutCreateWindow("PinBall");
+    glutReshapeFunc(janela);
+    glutDisplayFunc(exibe);
+    glutIdleFunc(gravidade);
+    glutKeyboardFunc(controle);
+    inicia();
+    glutMainLoop();
+}
+

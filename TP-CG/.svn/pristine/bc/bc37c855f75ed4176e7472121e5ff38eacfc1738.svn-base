@@ -1,0 +1,23 @@
+/*
+ * Trilha.h
+ *
+ *  Created on: 14/05/2015
+ *      Author: jandeilson
+ */
+
+#ifndef TRILHA_H_
+#define TRILHA_H_
+#include <windows.h>
+#include <GL/glut.h>
+#include <stdlib.h>
+#include <math.h>
+#include "Objeto.h"
+
+class Trilha: public Objeto {
+public:
+	Trilha();
+	virtual ~Trilha();
+	void Desenha();
+};
+
+#endif /* TRILHA_H_ */
